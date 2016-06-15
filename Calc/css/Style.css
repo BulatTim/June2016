@@ -1,0 +1,26 @@
+﻿        tr td button {
+            width: 7em;
+            height: 3.5em;
+            background-color: #d7d1d1;
+        }
+        tr td button:hover{
+            background-color: #6b6767;
+        }
+
+        .calc {
+            border: 1px solid black;
+            width: 24.5em;
+            min-width: 24.5em;
+        }
+
+        textarea {
+            width: 97%;
+            height: 97%;
+        }
+
+        .number {
+            background-color: #a3e4e4;
+        }
+        .number:hover {
+            background-color: #19c8c8;
+        }
