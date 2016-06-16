@@ -3,53 +3,53 @@
 <head>
     <title></title>
     <link href="css/Style.css" rel="stylesheet" />
+    <script src="scripts/Event.js"></script>
 </head>
 <body>
     <form class="calc">
         <div>
             <table>
                 <tr>
-                    <td rowspan="2" colspan="3"><textarea readonly></textarea></td>
-                    <td><button value="Backspace">Backspace</button></td>
+                    <td rowspan="2" colspan="3"><textarea id="inputWindow" readonly></textarea></td>
+                    <td><button name="Backspace">Backspace</button></td>
                 </tr>
                 <tr>
-                    <td><button value="x^y">X<sup>y</sup></button></td>
+                    <td><button name="^">X<sup>y</sup></button></td>
                 </tr>
                 <tr>
-                    <td><button value="(">(</button></td>
-                    <td><button value=")">)</button></td>
+                    <td><button name="(">(</button></td>
+                    <td><button name=")">)</button></td>
 
-                    <td><button value="C">C</button></td>
-                    <td><button value="/">/</button></td>
+                    <td><button name="Delete">C</button></td>
+                    <td><button name="/">/</button></td>
                 </tr>
                 <tr>
-                    <td><button value="7" class="number">7</button></td>
-                    <td><button value="8" class="number">8</button></td>
-                    <td><button value="9" class="number">9</button></td>
-                    <td><button value="*">*</button></td>
+                    <td><button name="7" class="number">7</button></td>
+                    <td><button name="8" class="number">8</button></td>
+                    <td><button name="9" class="number">9</button></td>
+                    <td><button name="*">*</button></td>
                 </tr>
                 <tr>
-                    <td><button value="4" class="number">4</button></td>
-                    <td><button value="5" class="number">5</button></td>
-                    <td><button value="6" class="number">6</button></td>
-                    <td><button value="+">+</button></td>
+                    <td><button name="4" class="number">4</button></td>
+                    <td><button name="5" class="number">5</button></td>
+                    <td><button name="6" class="number">6</button></td>
+                    <td><button name="+">+</button></td>
                 </tr>
                 <tr>
-                    <td><button value="1" class="number">1</button></td>
-                    <td><button value="2" class="number">2</button></td>
-                    <td><button value="3" class="number">3</button></td>
-                    <td><button value="-">-</button></td>
+                    <td><button name="1" class="number">1</button></td>
+                    <td><button name="2" class="number">2</button></td>
+                    <td><button name="3" class="number">3</button></td>
+                    <td><button name="-">-</button></td>
                 </tr>
                 <tr>
-                    <td><button value="0" class="number">0</button></td>
-                    <td><button value="," class="number">,</button></td>
+                    <td><button name="0" class="number">0</button></td>
+                    <td><button name="." class="number">.</button></td>
 
-                    <td><button value="+-">&#177</button></td>
-                    <td><button type="submit">=</button></td>
+                    <td><button name="+-">&#177</button></td>
+                    <td><button name="Enter" type="submit">=</button></td>
                 </tr>
             </table>
         </div>
-    </form>
-   
+    </form>    
 </body>
 </html>
