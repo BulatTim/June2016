@@ -1,22 +1,23 @@
-﻿       function ToRPN(inputString) {
-           var stack = [];
-           var outputString = [];
-           for (var i = 0; i < inputString.length; i++) {
-               switch (!isNaN(parseInt(inputString[i]))) {
-                   case true:
-                       var operator = GetDigitFromInputString(inputString, i);
-                       outputString.push(operator.digit);
-                       i = operator.i;
-                       break;
-                   case false:
-                       var operand = GetOperatorFromInputString(inputString[i], stack, outputString);
-                       stack = operand.stack;
-                       outputString = operand.outputString;
-                       break;
-               }
-           }
-           return outputString.concat(stack.reverse());
-       }
+﻿        function ToRPN(inputString) {
+            var stack = [];
+            var outputString = [];
+            for (var i = 0; i < inputString.length; i++) {
+                switch (!isNaN(parseInt(inputString[i]))) {
+                    case true:
+                        var operator = GetDigitFromInputString(inputString, i);
+                        outputString.push(operator.digit);
+                        i = operator.i;
+                        break;
+                    case false:
+                        var operand = GetOperatorFromInputString(inputString[i], stack, outputString);
+						
+                        stack = operand.stack;
+                        outputString = operand.outputString;
+                        break;
+                }
+            }
+            return outputString.concat(stack.reverse());
+        }
 function CalculateRPN(rpnString) {
     var stack = [];
     for (var i = 0; i < rpnString.length; i++) {
@@ -43,7 +44,7 @@ function GetDigitFromInputString(inputString,i)
     }
     return {
         digit: digit,
-        i: i
+        i: (digit.length>1?i-1:i)
     };
 }
 function GetOperatorFromInputString(inputOperator, stack, outputString) {
@@ -52,7 +53,7 @@ function GetOperatorFromInputString(inputOperator, stack, outputString) {
         case "(":
             stack.push(inputOperator);
             break;
-        case "*":case "/":case "+" :case "-":
+        case "*":case "/":case "+" :case "-":case "u":
             if (stack.length == 0) {
                 stack.push(inputOperator);
             }                        
@@ -76,10 +77,12 @@ function GetOperatorFromInputString(inputOperator, stack, outputString) {
             stack.push(inputOperator);
             break;
         case ")":
+			
             while (stack[stack.length - 1] != "(") {
                 outputString.push(stack.pop());
             }
             stack.pop();
+			
             break;
     }
     return {
@@ -101,16 +104,16 @@ function ExecuteOperator(operator,stack) {
     var firstOperand = stack.pop();
     var secondOperand = stack.pop();
     switch (operator) {
-        case "+":
-            stack.push(secondOperand + firstOperand);
+        case "u":
+            stack.push(secondOperand);
+            stack.push(-firstOperand);
+            break;
+        case "+":                    
+            stack.push(secondOperand + firstOperand);              
+                
             break;
         case "-":
-            if (secondOperand == undefined) {
-                stack.push(-firstOperand);
-            }
-            else {
-                stack.push(secondOperand - firstOperand);
-            }
+            stack.push(secondOperand - firstOperand);
             break;
         case "*":
             stack.push(secondOperand * firstOperand);
@@ -126,12 +129,16 @@ function ExecuteOperator(operator,stack) {
 }
 
         
-
+console.log(CalculateRPN(ToRPN("3 +u2")));
+console.log(CalculateRPN(ToRPN("4+3 +u2")));
+console.log(CalculateRPN(ToRPN("4+3 -u2")));        
+console.log(CalculateRPN(ToRPN("3 -u2")));
+console.log(CalculateRPN(ToRPN("3 *u2")));
 console.log("3 + 2=" + CalculateRPN(ToRPN("3 + 2")) + " is result identical? " + ((3 + 2) == CalculateRPN(ToRPN("3 + 2"))));
 console.log("3 - 2=" + CalculateRPN(ToRPN("3 - 2")) + " is result identical? " + ((3 - 2) == CalculateRPN(ToRPN("3 - 2"))));
 console.log("3 * 2=" + CalculateRPN(ToRPN("3 * 2")) + " is result identical? " + ((3 * 2) == CalculateRPN(ToRPN("3 * 2"))));
 console.log("3 / 2=" + CalculateRPN(ToRPN("3 / 2")) + " is result identical? " + ((3 / 2) == CalculateRPN(ToRPN("3 / 2"))));
-console.log("-3 + 2=" + CalculateRPN(ToRPN("-3 + 2")) + " is result identical? " + ((-3 + 2) == CalculateRPN(ToRPN("-3 + 2"))));
+console.log("u3 + 2=" + CalculateRPN(ToRPN("u3 + 2")) + " is result identical? " + ((-3 + 2) == CalculateRPN(ToRPN("u3 + 2"))));
 console.log("3 ^ 2=" + CalculateRPN(ToRPN("3 ^ 2")) + " is result identical? " + (Math.pow(3, 2) == CalculateRPN(ToRPN("3 ^ 2"))));
 console.log("423 + 134=" + CalculateRPN(ToRPN("423 + 134")) + " is result identical? " + ((423 + 134) == CalculateRPN(ToRPN("423 + 134"))));
 console.log("1.33 + 24.2=" + CalculateRPN(ToRPN("1.33 + 24.2")) + " is result identical? " + ((1.33 + 24.2) == CalculateRPN(ToRPN("1.33 + 24.2"))));
@@ -139,3 +146,4 @@ console.log("( 8 + 2 * 5 ) / ( 1 + 3 * 2 - 4 )=" + CalculateRPN(ToRPN("( 8 + 2 *
 console.log("2*(3+5)-(6+7)/(8-9)=" + CalculateRPN(ToRPN("2*(3+5)-(6+7)/(8-9)")) + " is result identical? " + ((2 * (3 + 5) - (6 + 7) / (8 - 9)) == CalculateRPN(ToRPN("2*(3+5)-(6+7)/(8-9)"))));
 console.log("3 + 4 * 2 / (1 - 5)^2=" + CalculateRPN(ToRPN("3 + 4 * 2 / (1 - 5)^2")) + " is result identical? " + ((3 + 4 * 2 / Math.pow((1 - 5), 2)) == CalculateRPN(ToRPN("3 + 4 * 2 / (1 - 5)^2"))));
 console.log("3 + 4 * 2 / ( 1 - 5 ) ^ 2 ^ 3=" + CalculateRPN(ToRPN("3 + 4 * 2 / ( 1 - 5 ) ^ 2 ^ 3")) + " is result identical? " + ((3 + 4 * 2 / Math.pow((1-5), Math.pow(2,3))) == CalculateRPN(ToRPN("3 + 4 * 2 / ( 1 - 5 ) ^ 2 ^ 3"))));
+
