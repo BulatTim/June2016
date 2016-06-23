@@ -1,4 +1,5 @@
-﻿        function ToRPN(inputString) {
+﻿'use strict'
+	   function ToRPN(inputString) {
             var stack = [];
             var outputString = [];
             for (var i = 0; i < inputString.length; i++) {
@@ -9,8 +10,7 @@
                         i = operator.i;
                         break;
                     case false:
-                        var operand = GetOperatorFromInputString(inputString[i], stack, outputString);
-						
+                        var operand = GetOperatorFromInputString(inputString[i], stack, outputString);						
                         stack = operand.stack;
                         outputString = operand.outputString;
                         break;
@@ -35,16 +35,16 @@ function GetDigitFromInputString(inputString,i)
 {
     var digit = "";
     digit += inputString[i];
-    if (!isNaN(parseInt(inputString[i + 1])) || inputString[i + 1] == ".") {
+    if (!isNaN(parseInt(inputString[i + 1])) || inputString[i + 1] === ".") {
         i++;
-        while (!isNaN(parseInt(inputString[i])) || inputString[i] == ".") {
+        while (!isNaN(parseInt(inputString[i])) || inputString[i] === ".") {
             digit += inputString[i];
             i++;
         }
     }
     return {
         digit: digit,
-        i: (digit.length>1?i-1:i)
+        i: (digit.length > 1 ? i-1 : i)
     };
 }
 function GetOperatorFromInputString(inputOperator, stack, outputString) {
@@ -54,7 +54,7 @@ function GetOperatorFromInputString(inputOperator, stack, outputString) {
             stack.push(inputOperator);
             break;
         case "*":case "/":case "+" :case "-":case "u":
-            if (stack.length == 0) {
+            if (stack.length === 0) {
                 stack.push(inputOperator);
             }                        
             else if (GetPriority(stack[stack.length - 1]) >= GetPriority(inputOperator)) {
@@ -81,8 +81,7 @@ function GetOperatorFromInputString(inputOperator, stack, outputString) {
             while (stack[stack.length - 1] != "(") {
                 outputString.push(stack.pop());
             }
-            stack.pop();
-			
+            stack.pop();			
             break;
     }
     return {
@@ -91,11 +90,11 @@ function GetOperatorFromInputString(inputOperator, stack, outputString) {
     };
 }
 function GetPriority(operator) {
-    if (operator == "(" || operator == ")")
+    if (operator === "(" || operator === ")")
         return 0;
-    else if (operator == "+" || operator == "-")
+    else if (operator === "+" || operator === "-")
         return 1;
-    else if (operator == "*" || operator == "/")
+    else if (operator === "*" || operator === "/")
         return 2;
     else
         return 3;
