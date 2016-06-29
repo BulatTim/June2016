@@ -1,0 +1,25 @@
+﻿table {
+       border: 1px solid #d9d2d2;
+}
+table tr th, table tr td {
+      width: 5em;
+      height: 2em;
+      border: 1px solid #d9d2d2;
+      padding: 0px;
+      text-align: center;
+}
+.greenCell {
+     
+     background-color: #caeeb1;
+}
+.blueCell {
+    
+     background-color: #b3daff;
+}
+.redCell{
+	background-color: #E80909;
+}
+#inputWindow {
+     width: 67em;
+
+}

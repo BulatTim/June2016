@@ -9,47 +9,11 @@ var mySingleton = (function () {
             this.dependency = dependencies
         }
   function init() {
-	function CreateLoadSequence()
+
+		
+	function CreateSequence(inputArray)
 	{
-		var fs = require('fs'); 
-		var contents = fs.readFileSync('Data.txt', 'utf8');
-		var arrayOfStrings=contents.replace('\r', '').split('\n');
-		var allNodes=[];
-		for(var i=0;i<arrayOfStrings.length;i++)
-		{
-			if(arrayOfStrings[i].length > 0)
-			{
-				var node=CreateNode(arrayOfStrings[i]);
-				if(node.name!=="")
-				{
-					allNodes.push(node);
-				}
-			}
-		}
-	return allNodes;
-	}
-	function CreateNode(inputString)
-	{
-		var arrayOfLibraries=inputString.split(/:|,/);
-		var name="";
-		var dependencies=[];
-		if(arrayOfLibraries.length>0)
-		{
-			name=arrayOfLibraries[0].trim();
-			for(var i=1;i<arrayOfLibraries.length;i++)
-			{
-				var dependency=arrayOfLibraries[i].trim();
-				if(dependency.length>0)
-				{
-					dependencies.push(dependency);
-				}
-				
-			}
-		}
-		return new Node(name,dependencies);
-	}	
-	function CreateSequence(loadSequence)
-	{
+		var loadSequence=inputArray;
 		var sequence=[];
 		function getObjectIdByName(loadSequence,name)
 		{
@@ -81,23 +45,23 @@ var mySingleton = (function () {
         }
 		function WriteSequence(successSequence,errorSequence)
 		{
-			var error = "error: ";
-			var success = "build plan: ";
-			function CreateLineFromArray(line,sequence)
+			var error = [];
+			var success = [];
+			function CreateLineFromArray(array,sequence)
 			{
 				for(var i=0;i<sequence.length;i++)
 				{
-					line+=sequence[i]+",";
+					array.push(sequence[i]);
 				}
-				return line[line.length-1]==="," ? line.substring(0,line.length-1):line;
+				return array;
 			}
-			function CreateLineFromArrayOfObjects(line,sequence)
+			function CreateLineFromArrayOfObjects(array,sequence)
 			{
 				for(var i=0;i<sequence.length;i++)
 				{
-					line+=sequence[i].name+",";
+					array.push(sequence[i].name);
 				}
-				return line[line.length-1]==="," ? line.substring(0,line.length-1):line;
+				return array;
 			}
 			function RewriteFile(filePath,data)
 			{
@@ -109,8 +73,8 @@ var mySingleton = (function () {
 			}
 			error=CreateLineFromArrayOfObjects(error,errorSequence);
 			success=CreateLineFromArray(success,successSequence);
-			RewriteFile("Error.txt",error);
-			RewriteFile("Success.txt",success);
+			// RewriteFile("Error.txt",error);
+			// RewriteFile("Success.txt",success);
 			return {
 				error:error,
 				success:success
@@ -145,8 +109,8 @@ var mySingleton = (function () {
 		
 	
 	return {
-		CreateSequence:function(){
-			var allNodes=CreateLoadSequence();
+		CreateSequence:function(allNodes){
+			// var allNodes=CreateLoadSequence();
 			return CreateSequence(allNodes);
 		}
 	}
@@ -168,7 +132,7 @@ var mySingleton = (function () {
 
 })();
 
-var instance = mySingleton.getInstance();
-var sequence = instance.CreateSequence();
-console.log("error: "+sequence.error);
-console.log("success: "+sequence.success);
+// var instance = mySingleton.getInstance();
+// var sequence = instance.CreateSequence();
+// console.log("error: "+sequence.error);
+// console.log("success: "+sequence.success);
