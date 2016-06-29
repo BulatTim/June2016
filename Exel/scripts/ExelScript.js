@@ -126,6 +126,7 @@ document.addEventListener("DOMContentLoaded", function () {
 				sequence =  mySingleton.getInstance().CreateSequence(JSON.parse(JSON.stringify(allNodes)));
 	}
 	
+	
 	function AddFormula()
 	{
 		var formulaAndNode = CreateFormulaAndNode();			
